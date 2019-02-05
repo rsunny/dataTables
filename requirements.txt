@@ -1,0 +1,15 @@
+dash==0.36.0
+dash-core-components==0.43.0
+dash-html-components==0.13.5
+dash-renderer==0.17.0
+dash-table==3.3.0
+dash-table-experiments==0.6.0
+datatable==0.7.0
+Flask==1.0.2
+Flask-Compress==1.4.0
+numpy==1.16.1
+pandas==0.24.0
+pipenv==2018.10.13
+plotly==3.5.0
+virtualenv==15.1.0
+virtualenv-clone==0.2.6
