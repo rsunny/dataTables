@@ -35,6 +35,16 @@ def create_tab1():
     table4 = pd.read_csv('inputTables/tab1/input4.csv')
     table5 = pd.read_csv('inputTables/tab1/input5.csv')
     return html.Div([
+        html.Div([
+            dcc.Dropdown(
+                id='select_1',
+                options=[
+                    {'label': i, 'value': i} for i in ['A', 'B', 'C']
+                ],
+            ),
+            html.Div([], id='select_next_1')],
+            id='select_boxes'
+        ),
         html.H4('Engagement Details'),
         dt.DataTable(
             rows=table1.to_dict('records'),
@@ -220,9 +230,70 @@ def call_tab_layout(tab_value):
         return create_tab4()
 
 
+# dynamic select boxes creation 1
+@app.callback(dash.dependencies.Output('select_next_1', 'children'),
+              [dash.dependencies.Input('select_1', 'value')])
+def call_select_1(value):
+    print(value)
+    if value == 'A':
+        return [
+            dcc.Dropdown(
+                id='select_2',
+                options=[
+                    {'label': i, 'value': i} for i in ['A', 'B', 'C']
+                ],
+            ),
+            html.Div([], id='select_next_2')
+        ]
+
+
+# dynamic select boxes creation 2
+@app.callback(dash.dependencies.Output('select_next_2', 'children'),
+              [dash.dependencies.Input('select_2', 'value')])
+def call_select_2(value):
+    print(value)
+    if value == 'B':
+        return [
+            dcc.Dropdown(
+                id='select_3',
+                options=[
+                    {'label': i, 'value': i} for i in ['A', 'B', 'C']
+                ],
+            ),
+            html.Div([], id='select_next_3')
+        ]
+
+
+# dynamic select boxes creation 3
+@app.callback(dash.dependencies.Output('select_next_3', 'children'),
+              [dash.dependencies.Input('select_3', 'value')])
+def call_select_3(value):
+    print(value)
+    if value == 'C':
+        return [
+            html.H4('Selected values A, B, C')
+        ]
+
+
+# Tab 1 table data fill
+@app.callback(dash.dependencies.Output('table_1', 'rows'),
+              [dash.dependencies.Input('select_3', 'value')])
+def call_select_3(value):
+    if value == 'C':
+        return pd.read_csv('inputTables/tab1/input1_data.csv').to_dict('records')
+
+
+# Tab 2 table data fill
+@app.callback(dash.dependencies.Output('table_2', 'rows'),
+              [dash.dependencies.Input('select_3', 'value')])
+def call_select_3(value):
+    if value == 'C':
+        return pd.read_csv('inputTables/tab1/input2_data.csv').to_dict('records')
+
+
 app.css.append_css({
     'external_url': 'static/css/dash.css'
 })
 
 if __name__ == '__main__':
-    app.run_server(debug=True, port=8000)
+    app.run_server(debug=True, port=8001)
